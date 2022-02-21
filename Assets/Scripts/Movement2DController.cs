@@ -7,13 +7,14 @@ public class Movement2DController : MonoBehaviour
     private Rigidbody2D rb;
 
     [Header("-----Edit mode toggles-----")]
-    [SerializeField] private bool enableMovementGizmos;
+    [SerializeField] private bool movementGizmos;
 
+
+    [Header("Sprite stuffs")]
+    private SpriteRenderer spriteRenderer;
 
     [Header("Movement Variables")]
     [SerializeField] private LayerMask groundLayer;
-
-    [Header("Movement Variables")]
     [SerializeField] private float movementAcceleration;
     [SerializeField] private float maxMoveSpeed;
     [SerializeField] private float groundLinearDrag;
@@ -43,8 +44,8 @@ public class Movement2DController : MonoBehaviour
 
     [Header("Corner Push Variables")]
     [SerializeField] private float topRaycastLength;
-    [SerializeField] private Vector3 edgeRaycastOffset;
-    [SerializeField] private Vector3 innerRaycastOffset;
+    [SerializeField] private Vector3 edgeRaycastOffset; //make sure it matches the width of the sprite
+    [SerializeField] private Vector3 innerRaycastOffset; //pokes out from the top of the sprite. If this raycast hits object, then pushes the object to the edgeraycast
     private bool canCornerPush;
 
 
@@ -68,6 +69,7 @@ public class Movement2DController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -132,7 +134,17 @@ public class Movement2DController : MonoBehaviour
         if (horizontalDirection == 0 || isChangingDirection)
             rb.velocity = new Vector2(0f, rb.velocity.y);
         else
+        {
             rb.AddForce(new Vector2(horizontalDirection, 0f) * movementAcceleration);
+            if (horizontalDirection > 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+            }
+        }
 
         //clamp velocity
         if (Mathf.Abs(rb.velocity.x) > maxMoveSpeed)
@@ -276,7 +288,7 @@ public class Movement2DController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(enableMovementGizmos)
+        if(movementGizmos)
         {
 
             Gizmos.color = Color.green;
