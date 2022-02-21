@@ -9,7 +9,6 @@ public class Spike : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("hurt");
         if (collision.gameObject.layer == ((int)LayerInGame.Player))
         {
             player = collision.gameObject.GetComponent<PlayerStats>();

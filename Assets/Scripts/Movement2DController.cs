@@ -74,7 +74,6 @@ public class Movement2DController : MonoBehaviour
 
     private void Update()
     {
-        rb.AddForce(Vector2.zero);
         horizontalDirection = GetInput().x;
         if (Input.GetKeyDown(KeyCode.Space))
             Jump();
@@ -133,7 +132,9 @@ public class Movement2DController : MonoBehaviour
     private void MoveCharacter()
     {
         if (horizontalDirection == 0 || isChangingDirection)
+        {
             rb.velocity = new Vector2(0f, rb.velocity.y);
+        }
         else
         {
             rb.AddForce(new Vector2(horizontalDirection, 0f) * movementAcceleration);
