@@ -74,12 +74,13 @@ public class Movement2DController : MonoBehaviour
 
     private void Update()
     {
+        rb.AddForce(Vector2.zero);
         horizontalDirection = GetInput().x;
         if (Input.GetKeyDown(KeyCode.Space))
             Jump();
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-
+            //wall grab
         }
 
         if (isOnWall)
