@@ -41,3 +41,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Focal Spell
+    uniqueID: 1901053973
+    locked: 0

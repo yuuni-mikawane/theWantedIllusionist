@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement2DController : MonoBehaviour
+public class InputController : MonoBehaviour
 {
     private Rigidbody2D rb;
 
@@ -74,6 +74,7 @@ public class Movement2DController : MonoBehaviour
 
     private void Update()
     {
+        //get inputs
         horizontalDirection = GetInput().x;
         if (Input.GetKeyDown(KeyCode.Space))
             Jump();

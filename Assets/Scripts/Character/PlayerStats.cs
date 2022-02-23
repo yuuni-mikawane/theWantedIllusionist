@@ -10,6 +10,10 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float currentInvincibilityTime;
     [SerializeField] private bool isInvincible = false;
 
+    [SerializeField] private SpriteRenderer playerRenderer;
+    [SerializeField] private Material normalMat;
+    [SerializeField] private Material whiteFlashMat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +30,12 @@ public class PlayerStats : MonoBehaviour
                 isInvincible = false;
                 currentInvincibilityTime = 0;
             }
+
+            playerRenderer.material = whiteFlashMat;
+        }
+        else
+        {
+            playerRenderer.material = normalMat;
         }
     }
 
