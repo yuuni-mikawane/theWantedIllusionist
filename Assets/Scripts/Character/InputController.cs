@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,11 @@ public class InputController : MonoBehaviour
     [SerializeField] private bool movementGizmos;
 
 
-    [Header("Sprite stuffs")]
+    [Header("References")]
     private SpriteRenderer spriteRenderer;
+    private GameManager gameManager;
+    [SerializeField] private FocalSpell focalSpell;
+    [SerializeField] private Camera cam;
 
     [Header("Movement Variables")]
     [SerializeField] private LayerMask groundLayer;
@@ -56,42 +60,46 @@ public class InputController : MonoBehaviour
     [SerializeField] private bool canWallJump;
 
     [Header("-----Combat variables-----")]
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackSpeed;
-    [SerializeField] private float attackDamage;
-    [SerializeField] private Transform leftAttack;
-    [SerializeField] private Transform rightAttack;
-    [SerializeField] private Transform upAttack;
-    [SerializeField] private Transform downAttack;
-
-
+    [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private float attackDamage = 1f;
+    [SerializeField] private float attackPointOffset = 1.5f;
+    [SerializeField] private Vector3 attackPos;
+    [SerializeField] private Vector3 direction;
+    private Vector3 mousePos;
+    [SerializeField] private LayerMask enemyLayer;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = GameManager.Instance;
     }
 
     private void Update()
     {
-        //get inputs
-        horizontalDirection = GetInput().x;
-        if (Input.GetKeyDown(KeyCode.Space))
-            Jump();
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (gameManager.gameState == GameState.Playing)
         {
-            //wall grab
-        }
+            //get inputs
+            horizontalDirection = GetInput().x;
+            if (Input.GetKeyDown(KeyCode.Space))
+                Jump();
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+                focalSpell.ToggleFocalSpell();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                Attack();
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (isOnWall)
-        {
-            lastOnWallTime = Time.time;
-        }
-        if (isGrounded)
-        {
-            extraJumpCount = maxExtraJump;
-            lastGroundedTime = Time.time;
-            canWallJump = true;
+            if (isOnWall)
+            {
+                lastOnWallTime = Time.time;
+            }
+            if (isGrounded)
+            {
+                extraJumpCount = maxExtraJump;
+                lastGroundedTime = Time.time;
+                canWallJump = true;
+            }
         }
     }
 
@@ -286,7 +294,14 @@ public class InputController : MonoBehaviour
 
     private void Attack()
     {
-
+        focalSpell.TurnOff();
+        direction = (mousePos - transform.position).normalized;
+        attackPos = transform.position + direction * attackPointOffset;
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
+        foreach(Collider2D enemy in hitColliders)
+        {
+            Debug.Log("hit " + enemy.name);
+        }
     }
 
     private void OnDrawGizmos()
@@ -316,6 +331,7 @@ public class InputController : MonoBehaviour
             Gizmos.DrawLine(transform.position + innerRaycastOffset + Vector3.up * topRaycastLength,
                             transform.position + innerRaycastOffset + Vector3.up * topRaycastLength + Vector3.right * topRaycastLength);
         }
+        Gizmos.DrawWireSphere(attackPos, attackRange);
     }
 }
 
