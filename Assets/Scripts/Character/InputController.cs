@@ -64,8 +64,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private float attackSpeed = 1f;
     [SerializeField] private float attackDamage = 1f;
     [SerializeField] private float attackPointOffset = 1.5f;
-    [SerializeField] private Vector3 attackPos;
-    [SerializeField] private Vector3 direction;
+    [SerializeField] private Vector2 attackPos;
+    [SerializeField] private Vector2 direction;
     private Vector3 mousePos;
     [SerializeField] private LayerMask enemyLayer;
 
@@ -295,8 +295,9 @@ public class InputController : MonoBehaviour
     private void Attack()
     {
         focalSpell.TurnOff();
-        direction = (mousePos - transform.position).normalized;
-        attackPos = transform.position + direction * attackPointOffset;
+        direction = (mousePos - transform.position);
+        direction.Normalize();
+        attackPos = Vector2.one * transform.position + direction * attackPointOffset;
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
         foreach(Collider2D enemy in hitColliders)
         {
