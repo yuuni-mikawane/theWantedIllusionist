@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameCommon;
 
 public class InputController : MonoBehaviour
 {
@@ -61,8 +62,7 @@ public class InputController : MonoBehaviour
 
     [Header("-----Combat variables-----")]
     [SerializeField] private float attackRange = 1.5f;
-    [SerializeField] private float attackSpeed = 1f;
-    [SerializeField] private float attackDamage = 1f;
+    [SerializeField] private int attackDamage = 1;
     [SerializeField] private float attackPointOffset = 1.5f;
     [SerializeField] private Vector2 attackPos;
     [SerializeField] private Vector2 direction;
@@ -301,7 +301,7 @@ public class InputController : MonoBehaviour
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
         foreach(Collider2D enemy in hitColliders)
         {
-            Debug.Log("hit " + enemy.name);
+            enemy.GetComponent<CanTakeDamage>().TakeDamage(attackDamage);
         }
     }
 

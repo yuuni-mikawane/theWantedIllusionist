@@ -38,6 +38,7 @@ public class FocalSpell : MonoBehaviour
         transform.DOKill();
         transform.DOScale(0, duration);
         activated = false;
+        Cursor.visible = true;
     }
     public void TurnOn()
     {
@@ -47,6 +48,7 @@ public class FocalSpell : MonoBehaviour
         transform.DOKill();
         transform.DOScale(gameManager.CurrentFocalSize(), duration);
         activated = true;
+        Cursor.visible = false;
     }
 
     public void ToggleFocalSpell()

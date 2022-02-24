@@ -9,9 +9,21 @@ public class GameManager : SingletonBindAlive<GameManager>
     [SerializeField] private float focalBaseSize = 5f;
     [SerializeField] private float focalSizeUpPerLevel = 1f;
 
+    [SerializeField] private int playerHP = 0;
+    [SerializeField] private int deaths = 0;
+
+    public GameObject currentCheckpoint;
     public GameState gameState;
 
     public int FocalLevel { get => focalLevel; }
+    public int PlayerHP { get => playerHP; set => playerHP = value; }
+    public int Deaths { get => deaths; }
+
+    public void ResetForNewGame()
+    {
+        focalLevel = 1;
+        deaths = 0;
+    }
 
     public float CurrentFocalSize()
     {
@@ -21,5 +33,10 @@ public class GameManager : SingletonBindAlive<GameManager>
     public void LevelUpFocal(int level = 1)
     {
         focalLevel += level;
+    }
+
+    public void IncreaseDeathCount(int amount = 1)
+    {
+        deaths += amount;
     }
 }

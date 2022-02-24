@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - Environment
-  - Spikes
+  - 
   - Interactables
   - ManaOrb
   - Enemies
@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Text on walls
+    uniqueID: 1879536953
+    locked: 0
   - name: Focal Spell
     uniqueID: 1901053973
+    locked: 0
+  - name: Player
+    uniqueID: 238163513
     locked: 0
