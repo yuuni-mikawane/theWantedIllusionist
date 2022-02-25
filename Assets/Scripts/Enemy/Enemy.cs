@@ -21,6 +21,7 @@ public class Enemy : CanTakeDamage
 
     void Update()
     {
+        //shoot
         if (lastShotTime + actualFirerate < Time.time)
         {
             lastShotTime = Time.time;
