@@ -19,6 +19,7 @@ public class PlayerStats : SingletonBind<PlayerStats>
     [SerializeField] private DeathScreen deathScreen;
 
     private GameManager gameManager;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class PlayerStats : SingletonBind<PlayerStats>
         hp = maxHp;
         gameManager = GameManager.Instance;
         gameManager.PlayerHP = hp;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -101,6 +103,8 @@ public class PlayerStats : SingletonBind<PlayerStats>
         {
             isDead = true;
             gameManager.IncreaseDeathCount();
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
             deathScreen.FadeIn();
         }
     }

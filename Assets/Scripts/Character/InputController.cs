@@ -105,31 +105,34 @@ public class InputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckCollisions();
-        MoveCharacter();
+        if (gameManager.gameState == GameState.Playing)
+        {
+            CheckCollisions();
+            MoveCharacter();
 
-        if (isGrounded)
-        {
-            ApplyGroundLinearDrag();
-        }
-        else
-        {
-            ApplyAirLinearDrag();
-            FallMultiplier();
-        }
-
-        if (pendingJump)
-        {
-            ApplyAirLinearDrag();
-            if (!NormalJump())
+            if (isGrounded)
             {
-                if (!WallJump())
-                    ExtraJump();
+                ApplyGroundLinearDrag();
             }
-        }
-        if (canCornerPush)
-        {
-            CornerPush(rb.velocity.y);
+            else
+            {
+                ApplyAirLinearDrag();
+                FallMultiplier();
+            }
+
+            if (pendingJump)
+            {
+                ApplyAirLinearDrag();
+                if (!NormalJump())
+                {
+                    if (!WallJump())
+                        ExtraJump();
+                }
+            }
+            if (canCornerPush)
+            {
+                CornerPush(rb.velocity.y);
+            }
         }
     }
 

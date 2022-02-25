@@ -5,7 +5,7 @@ using TMPro;
 
 public class InteractableObjectWithText : MonoBehaviour
 {
-    [SerializeField] private TextMeshPro popupText;
+    [SerializeField] private GameObject popupText;
 
     private void Start()
     {
