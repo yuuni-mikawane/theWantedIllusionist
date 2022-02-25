@@ -68,6 +68,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private Vector2 direction;
     private Vector3 mousePos;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private GameObject swordSlashPrefab;
+    [SerializeField] private GameObject swordPos;
 
     private void Start()
     {
@@ -301,6 +303,10 @@ public class InputController : MonoBehaviour
         direction = (mousePos - transform.position);
         direction.Normalize();
         attackPos = Vector2.one * transform.position + direction * attackPointOffset;
+        float rotation_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        swordPos.transform.position = attackPos;
+        swordPos.transform.rotation = Quaternion.Euler(0f, 0f, rotation_z);
+        swordSlashPrefab.Spawn(swordPos.transform);
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
         foreach(Collider2D enemy in hitColliders)
         {

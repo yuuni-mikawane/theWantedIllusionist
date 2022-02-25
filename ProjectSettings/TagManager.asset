@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1050035493
+    locked: 0
+  - name: Background props
+    uniqueID: 1612000399
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

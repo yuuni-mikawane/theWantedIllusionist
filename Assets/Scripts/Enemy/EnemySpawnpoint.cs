@@ -7,15 +7,45 @@ public class EnemySpawnpoint : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     private GameObject thisEnemy;
+    private GameManager gameManager;
+    private bool allowedToSpawn;
 
-    void Awake()
+    private void Start()
     {
-        thisEnemy = enemyPrefab.Spawn();
+        gameManager = GameManager.Instance;
+    }
+
+    public void Activate()
+    {
+        if (gameManager.gameState == GameState.Respawned)
+        {
+            if (allowedToSpawn)
+                SpawnEnemy();
+            allowedToSpawn = false;
+        }
+        else
+        {
+            allowedToSpawn = true;
+            SpawnEnemy();
+        }
+    }
+
+    private void SpawnEnemy()
+    {
+        if (thisEnemy != null)
+            thisEnemy.Recycle();
+        thisEnemy = enemyPrefab.Spawn(transform.position, transform.rotation);
     }
 
     public void Deactivate()
     {
-        thisEnemy.Recycle();
-        gameObject.SetActive(false);
+        if (thisEnemy != null)
+            thisEnemy.Recycle();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, Vector3.one);
     }
 }

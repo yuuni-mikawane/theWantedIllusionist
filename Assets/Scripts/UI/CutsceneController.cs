@@ -12,7 +12,8 @@ public class CutsceneController : MonoBehaviour
     private int currentElement = 0;
     private GameManager gameManager;
     [SerializeField] private bool hasFadeIn = false;
-    [SerializeField] private float fadeInOutDuration = 1f;
+    public float fadeInOutDuration = 1f;
+    private bool canContinue = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,18 +32,20 @@ public class CutsceneController : MonoBehaviour
             //set background to transparent
             background.color = new Color(background.color.r, background.color.g, background.color.b, 0f);
             //start fade in
-            background.DOFade(1, fadeInOutDuration);
+            background.DOFade(1, fadeInOutDuration).OnComplete(() => {
+                canContinue = true;
+            });
+        }
+        else
+        {
+            canContinue = true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            End();
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.Space))
+        if (canContinue && (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyDown(KeyCode.Space)))
         {
             Continue();
         }
@@ -67,6 +70,6 @@ public class CutsceneController : MonoBehaviour
         background.DOFade(0, fadeInOutDuration);
         gameManager.gameState = GameState.Playing;
         clickToContinueText.SetActive(false);
-        this.enabled = false;
+        enabled = false;
     }
 }
