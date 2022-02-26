@@ -9,10 +9,14 @@ public class MenuCanvas : MonoBehaviour
     [SerializeField] private Texture2D cursor;
     private GameManager gameManager;
 
+    private void Start()
+    {
+        gameManager = GameManager.Instance;
+    }
+
     public void StartGame()
     {
         loadScreen.SetActive(true);
-        gameManager = GameManager.Instance;
         StartCoroutine(LoadAsyncScene());
         Cursor.SetCursor(cursor, Vector2.one * cursor.width/2, CursorMode.ForceSoftware);
         gameManager.StartRunTimer();

@@ -19,12 +19,14 @@ public class PlayerStats : SingletonBind<PlayerStats>
     [SerializeField] private DeathScreen deathScreen;
 
     private GameManager gameManager;
+    private AudioManager audioManager;
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         hp = maxHp;
+        audioManager = AudioManager.Instance;
         gameManager = GameManager.Instance;
         gameManager.PlayerHP = hp;
         rb = GetComponent<Rigidbody2D>();
@@ -72,6 +74,7 @@ public class PlayerStats : SingletonBind<PlayerStats>
             hp -= damage;
             gameManager.PlayerHP = hp;
             StartInvincibility();
+            audioManager.HurtSFX();
         }
         if (hp <= 0)
             Die();

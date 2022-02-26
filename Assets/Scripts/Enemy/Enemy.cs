@@ -13,10 +13,12 @@ public class Enemy : CanTakeDamage
     [SerializeField] private GameObject explosionFX;
     private List<GameObject> bulletsShot = new List<GameObject>();
     private float lastShotTime;
+    private AudioManager audioManager;
 
     private void Start()
     {
         actualFirerate = Random.Range(minFirerate, maxFirerate);
+        audioManager = AudioManager.Instance;
     }
 
     void Update()
@@ -44,6 +46,7 @@ public class Enemy : CanTakeDamage
         if (hp == 0)
         {
             explosionFX.Spawn(transform.position);
+            audioManager.ExplosionSFX();
         }
     }
 }

@@ -25,12 +25,24 @@ public class GameManager : SingletonBindAlive<GameManager>
     public void StartRunTimer()
     {
         startTime = DateTime.Now;
+        deaths = 0;
+        focalLevel = 1;
     }
 
     public string GetTimeOfRun()
     {
         TimeSpan timeOfRun = DateTime.Now - startTime;
-        return timeOfRun.Minutes + ":" + timeOfRun.Seconds + "." + timeOfRun.Milliseconds;
+        string min;
+        if (timeOfRun.Seconds < 10)
+        {
+            min = "0" + timeOfRun.Seconds;
+        }
+        else
+        {
+            min = timeOfRun.Seconds.ToString();
+        }
+
+        return timeOfRun.Minutes + ":" + min + "." + timeOfRun.Milliseconds;
     }
 
     public void ResetForNewGame()

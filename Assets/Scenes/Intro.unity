@@ -281,6 +281,70 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 845148281}
   m_CullTransparentMesh: 1
+--- !u!1 &861933823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 861933824}
+  - component: {fileID: 861933825}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &861933824
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861933823}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -93.22825, y: 19.897545, z: -7.418587}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &861933825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861933823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dcc8c616e6501b42b0ed2e0ea20ff1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - clip: {fileID: 8300000, guid: fe7dfb5509a5e9749bac10c0fe9ba59a, type: 3}
+    volume: 0.2
+    pitch: 1
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: a32933915181669478852115c8e993d5, type: 3}
+    volume: 0.9
+    pitch: 1
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: a8c2af94c5ff85040a4f3e9d874fa738, type: 3}
+    volume: 0.7
+    pitch: 1
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 0d37d2561d42ae241b5e9994fab8db21, type: 3}
+    volume: 0.9
+    pitch: 1
+    audioSource: {fileID: 0}
+  - clip: {fileID: 8300000, guid: 13356a3c444b44d47b413b5130f05db3, type: 3}
+    volume: 0.9
+    pitch: 1
+    audioSource: {fileID: 0}
 --- !u!1 &887661742
 GameObject:
   m_ObjectHideFlags: 0

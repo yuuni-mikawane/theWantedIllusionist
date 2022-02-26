@@ -13,10 +13,12 @@ public class InputController : MonoBehaviour
 
 
     [Header("References")]
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private GameManager gameManager;
+    private AudioManager audioManager;
     [SerializeField] private FocalSpell focalSpell;
     [SerializeField] private Camera cam;
+    [SerializeField] private Animator anim;
 
     [Header("Movement Variables")]
     [SerializeField] private LayerMask groundLayer;
@@ -74,8 +76,8 @@ public class InputController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = GameManager.Instance;
+        audioManager = AudioManager.Instance;
     }
 
     private void Update()
@@ -84,7 +86,7 @@ public class InputController : MonoBehaviour
         {
             //get inputs
             horizontalDirection = GetInput().x;
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
                 Jump();
             if (Input.GetKeyDown(KeyCode.Mouse1))
                 focalSpell.ToggleFocalSpell();
@@ -102,6 +104,7 @@ public class InputController : MonoBehaviour
                 lastGroundedTime = Time.time;
                 canWallJump = true;
             }
+            Animate();
         }
     }
 
@@ -154,11 +157,11 @@ public class InputController : MonoBehaviour
             rb.AddForce(new Vector2(horizontalDirection, 0f) * movementAcceleration);
             if (horizontalDirection > 0)
             {
-                spriteRenderer.flipX = true;
+                spriteRenderer.flipX = false;
             }
             else
             {
-                spriteRenderer.flipX = false;
+                spriteRenderer.flipX = true;
             }
         }
 
@@ -167,6 +170,13 @@ public class InputController : MonoBehaviour
         {
             rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x)* maxMoveSpeed, rb.velocity.y);
         }
+    }
+
+    private void Animate()
+    {
+        anim.SetBool("isMoving", rb.velocity.y <= 0.05f && horizontalDirection == 0);
+        anim.SetBool("isGrounded", isGrounded);
+        anim.SetBool("isJumping", (rb.velocity.y > 0));
     }
 
     private void ApplyGroundLinearDrag()
@@ -228,6 +238,7 @@ public class InputController : MonoBehaviour
                 jumpPressedTime = 0;
                 lastGroundedTime = 0;
                 pendingJump = false;
+                audioManager.JumpSFX();
                 return true;
             }
         }
@@ -248,6 +259,7 @@ public class InputController : MonoBehaviour
                 jumpPressedTime = 0;
                 lastOnWallTime = 0;
                 pendingJump = false;
+                audioManager.JumpSFX();
                 return true;
             }
         }
@@ -264,6 +276,7 @@ public class InputController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 0f);
             rb.AddForce(Vector2.up * extraJumpForce, ForceMode2D.Impulse);
             pendingJump = false;
+            audioManager.JumpSFX();
         }
     }
 
@@ -273,7 +286,7 @@ public class InputController : MonoBehaviour
         {
             rb.gravityScale = fallMultiplier;
         }
-        else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        else if (rb.velocity.y > 0 && (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.W)))
         {
             rb.gravityScale = lowJumpFallMultiplier;
         }
@@ -313,6 +326,8 @@ public class InputController : MonoBehaviour
         {
             enemy.GetComponent<CanTakeDamage>().TakeDamage(attackDamage);
         }
+
+        audioManager.SlashSFX();
     }
 
     private void OnDrawGizmos()

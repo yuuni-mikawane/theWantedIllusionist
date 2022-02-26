@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class ManaOrb : MonoBehaviour
 {
-    GameManager gameManager;
+    private GameManager gameManager;
+    private AudioManager audioManager;
+
     [SerializeField] private int levelValue = 1;
 
     private void Start()
     {
         gameManager = GameManager.Instance;
+        audioManager = AudioManager.Instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -17,6 +20,7 @@ public class ManaOrb : MonoBehaviour
         if (gameManager != null && collision.gameObject.layer == (int)LayerInGame.Player)
         {
             gameManager.LevelUpFocal(levelValue);
+            audioManager.OrbSFX();
             gameObject.SetActive(false);
         }
     }
