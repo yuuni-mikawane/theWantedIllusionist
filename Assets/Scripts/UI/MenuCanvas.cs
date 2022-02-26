@@ -7,12 +7,15 @@ public class MenuCanvas : MonoBehaviour
 {
     [SerializeField] private GameObject loadScreen;
     [SerializeField] private Texture2D cursor;
+    private GameManager gameManager;
 
     public void StartGame()
     {
         loadScreen.SetActive(true);
+        gameManager = GameManager.Instance;
         StartCoroutine(LoadAsyncScene());
         Cursor.SetCursor(cursor, Vector2.one * cursor.width/2, CursorMode.ForceSoftware);
+        gameManager.StartRunTimer();
     }
 
     public void Credits()

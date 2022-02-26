@@ -53,6 +53,9 @@ TagManager:
   - name: Focal Spell
     uniqueID: 1901053973
     locked: 0
+  - name: Enemies
+    uniqueID: 4273579897
+    locked: 0
   - name: Player
     uniqueID: 238163513
     locked: 0

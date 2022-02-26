@@ -67,7 +67,9 @@ public class CutsceneController : MonoBehaviour
         {
             cutsceneElement.SetActive(false);
         }
-        background.DOFade(0, fadeInOutDuration);
+        background.DOFade(0, fadeInOutDuration).OnComplete(() => {
+            gameObject.SetActive(false);
+        });
         gameManager.gameState = GameState.Playing;
         clickToContinueText.SetActive(false);
         enabled = false;
