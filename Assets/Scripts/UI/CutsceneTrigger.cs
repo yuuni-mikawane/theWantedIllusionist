@@ -18,7 +18,7 @@ public class CutsceneTrigger : MonoBehaviour
     {
         if (collision.gameObject.layer == (int)LayerInGame.Player)
         {
-            gameController.TriggerCutsceneAndTeleport(id);
+            gameController.TriggerCutscene(id);
             focalSpell.TurnOff();
             gameObject.SetActive(false);
         }

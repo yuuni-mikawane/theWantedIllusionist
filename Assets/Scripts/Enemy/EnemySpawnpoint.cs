@@ -15,6 +15,14 @@ public class EnemySpawnpoint : MonoBehaviour
         gameManager = GameManager.Instance;
     }
 
+    private void Update()
+    {
+        if (gameManager.gameState != GameState.Respawned)
+        {
+            allowedToSpawn = true;
+        }
+    }
+
     public void Activate()
     {
         if (gameManager.gameState == GameState.Respawned)

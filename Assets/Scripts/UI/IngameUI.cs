@@ -7,6 +7,7 @@ public class IngameUI : MonoBehaviour
 {
     [SerializeField] private GameObject[] hearts;
     [SerializeField] private TextMeshProUGUI deathCount;
+    [SerializeField] private TextMeshProUGUI manaOrbCount;
     private GameManager gameManager;
 
     // Start is called before the first frame update
@@ -37,5 +38,8 @@ public class IngameUI : MonoBehaviour
         }
         //deathcount
         deathCount.text = gameManager.Deaths + " deaths";
+
+        //manaOrbCount
+        manaOrbCount.text = gameManager.FocalLevel - 1 + "/5";
     }
 }

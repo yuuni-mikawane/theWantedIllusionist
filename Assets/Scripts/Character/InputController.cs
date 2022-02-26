@@ -286,7 +286,8 @@ public class InputController : MonoBehaviour
     private void CheckCollisions()
     {
         isGrounded = Physics2D.Raycast(transform.position + groundRaycastOffset, Vector2.down, groundRaycastLength, groundLayer) ||
-                                Physics2D.Raycast(transform.position - groundRaycastOffset, Vector2.down, groundRaycastLength, groundLayer);
+                        Physics2D.Raycast(transform.position - groundRaycastOffset, Vector2.down, groundRaycastLength, groundLayer) ||
+                        Physics2D.Raycast(transform.position, Vector2.down, groundRaycastLength, groundLayer);
 
         isOnWall = Physics2D.OverlapCircle(transform.position - wallColCircleOffset, wallCheckRadius, groundLayer) ||
                                 Physics2D.OverlapCircle(transform.position + wallColCircleOffset, wallCheckRadius, groundLayer);

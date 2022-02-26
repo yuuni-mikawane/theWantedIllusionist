@@ -18,13 +18,16 @@ public class GameController : SingletonBind<GameController>
         gameManager = GameManager.Instance;
     }
 
-    public void TriggerCutsceneAndTeleport(int id)
+    public void TriggerCutscene(int id)
     {
         cutsceneId = id;
         cutscenes[id].SetActive(true);
         gameManager.gameState = GameState.Cutscene;
-        teleportDelay = cutscenes[id].GetComponent<CutsceneController>().fadeInOutDuration;
-        StartCoroutine(TeleportPlayer());
+        if (cutsceneTeleportPos[id] != null)
+        {
+            teleportDelay = cutscenes[id].GetComponent<CutsceneController>().fadeInOutDuration;
+            StartCoroutine(TeleportPlayer());
+        }
     }
 
     private IEnumerator TeleportPlayer()
