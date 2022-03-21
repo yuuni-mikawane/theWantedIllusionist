@@ -29,6 +29,13 @@ public class EndSceneController : MonoBehaviour
         StartCoroutine(LoadAsyncScene());
     }
 
+    public void Restart()
+    {
+        Time.timeScale = 1f;
+        gameManager.StartRunTimer();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     IEnumerator LoadAsyncScene()
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(0);

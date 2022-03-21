@@ -176,7 +176,7 @@ public class InputController : MonoBehaviour
     {
         anim.SetBool("isMoving", rb.velocity.y <= 0.05f && horizontalDirection != 0);
         anim.SetBool("isGrounded", isGrounded);
-        anim.SetBool("isJumping", (rb.velocity.y != 0));
+        anim.SetBool("isJumping", (rb.velocity.y > 0));
     }
 
     private void ApplyGroundLinearDrag()

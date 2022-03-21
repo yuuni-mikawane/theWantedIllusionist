@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuCanvas : MonoBehaviour
 {
     [SerializeField] private GameObject loadScreen;
-    [SerializeField] private Texture2D cursor;
+    [SerializeField] private GameObject creditScreen;
+    [SerializeField] private Scrollbar scroll;
     private GameManager gameManager;
 
     private void Start()
@@ -18,13 +20,16 @@ public class MenuCanvas : MonoBehaviour
     {
         loadScreen.SetActive(true);
         StartCoroutine(LoadAsyncScene());
-        Cursor.SetCursor(cursor, Vector2.one * cursor.width/2, CursorMode.ForceSoftware);
         gameManager.StartRunTimer();
     }
 
-    public void Credits()
+    public void Credits(bool state)
     {
-
+        creditScreen.SetActive(state);
+        if (state)
+        {
+            scroll.value = 1f;
+        }
     }
 
     IEnumerator LoadAsyncScene()

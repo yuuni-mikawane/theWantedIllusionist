@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: Lantern Anim
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: 21300000, guid: fa3dd203be49284428009b4da958fd13, type: 3}
+  - {fileID: 21300000, guid: a7cc99a9a000e9849ab3c13e9bf07f3f, type: 3}
+  - {fileID: 21300000, guid: b0373150eef211442b5e6e887b52c26a, type: 3}
+  - {fileID: 21300000, guid: dfaf903a36841284083968ba10e0a9dd, type: 3}
+  - {fileID: 21300000, guid: f13af03f47361784894a1462b2a9281d, type: 3}
+  - {fileID: 21300000, guid: 218cfa30d96afc849b809458e587e614, type: 3}
+  - {fileID: 21300000, guid: 18b41bc347b7b0644aca019707d5c250, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
