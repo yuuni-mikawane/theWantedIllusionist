@@ -86,7 +86,7 @@ public class InputController : MonoBehaviour
         {
             //get inputs
             horizontalDirection = GetInput().x;
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.Space))
                 Jump();
             if (Input.GetKeyDown(KeyCode.Mouse1))
                 focalSpell.ToggleFocalSpell();
@@ -168,7 +168,7 @@ public class InputController : MonoBehaviour
         //clamp velocity
         if (Mathf.Abs(rb.velocity.x) > maxMoveSpeed)
         {
-            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x)* maxMoveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * maxMoveSpeed, rb.velocity.y);
         }
     }
 
@@ -202,7 +202,7 @@ public class InputController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position - innerRaycastOffset + Vector3.up * topRaycastLength, Vector3.left, topRaycastLength, groundLayer);
         if (hit.collider != null)
         {
-            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRaycastLength, 
+            float newPos = Vector3.Distance(new Vector3(hit.point.x, transform.position.y, 0f) + Vector3.up * topRaycastLength,
                             transform.position - edgeRaycastOffset + Vector3.up * topRaycastLength);
             transform.position = new Vector3(transform.position.x + newPos, transform.position.y, transform.position.z);
             rb.velocity = new Vector2(rb.velocity.x, yVel);
@@ -286,7 +286,7 @@ public class InputController : MonoBehaviour
         {
             rb.gravityScale = fallMultiplier;
         }
-        else if (rb.velocity.y > 0 && (!Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.W)))
+        else if (rb.velocity.y > 0 && (!Input.GetKey(KeyCode.Space)))
         {
             rb.gravityScale = lowJumpFallMultiplier;
         }
@@ -313,16 +313,46 @@ public class InputController : MonoBehaviour
 
     private void Attack()
     {
+        //focalSpell.TurnOff();
+        //direction = (mousePos - transform.position);
+        //direction.Normalize();
+        //attackPos = Vector2.one * transform.position + direction * attackPointOffset;
+        //float rotation_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //swordPos.transform.position = attackPos;
+        //swordPos.transform.rotation = Quaternion.Euler(0f, 0f, rotation_z);
+        //swordSlashPrefab.Spawn(swordPos.transform);
+
         focalSpell.TurnOff();
-        direction = (mousePos - transform.position);
-        direction.Normalize();
-        attackPos = Vector2.one * transform.position + direction * attackPointOffset;
-        float rotation_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Vector2 attackDirection;
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            attackDirection = Vector2.up;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            attackDirection = Vector2.down;
+        }
+        else
+        {
+            if (spriteRenderer.flipX)
+            {
+                attackDirection = Vector2.left;
+            }
+            else
+            {
+                attackDirection = Vector2.right;
+            }
+        }
+
+        attackPos = Vector2.one * transform.position + attackDirection * attackPointOffset;
+        float rotation_z = Mathf.Atan2(attackDirection.y, attackDirection.x) * Mathf.Rad2Deg;
         swordPos.transform.position = attackPos;
         swordPos.transform.rotation = Quaternion.Euler(0f, 0f, rotation_z);
         swordSlashPrefab.Spawn(swordPos.transform);
+
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(attackPos, attackRange, enemyLayer);
-        foreach(Collider2D enemy in hitColliders)
+        foreach (Collider2D enemy in hitColliders)
         {
             enemy.GetComponent<CanTakeDamage>().TakeDamage(attackDamage);
         }
@@ -332,7 +362,7 @@ public class InputController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if(movementGizmos)
+        if (movementGizmos)
         {
 
             Gizmos.color = Color.green;
